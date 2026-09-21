@@ -95,7 +95,7 @@ hostname -I
 For example:
 
 ```text
-10.1.16.84
+10.1.52.72
 ```
 
 Return to the OpenPAVE checkout on the local machine.
@@ -115,7 +115,7 @@ scripts/deploy_seam.sh <DGX_USER>@<DGX_IP> '$HOME/openpave-seam' '$HOME/.venv-ze
 Example:
 
 ```bash
-scripts/deploy_seam.sh ste-dpe@10.1.16.84 '$HOME/openpave-seam' '$HOME/.venv-zenoh/bin/python'
+scripts/deploy_seam.sh dgx@10.1.52.72 '$HOME/openpave-seam' '$HOME/.venv-zenoh/bin/python'
 ```
 
 Enter the SSH password if prompted and allow the deployment to complete.
@@ -379,62 +379,8 @@ seq
 
 The JPEG itself travels over a separate data plane.
 
-For full image delivery, see:
-
-```text
-experiments/camera-mve/
-```
-
-including:
-
-```text
-sensor_body_node.py
-get_image.py
-```
-
-Therefore, receiving:
-
-```text
-"status": "success"
-```
-
-with valid image metadata is the expected successful result for this seam control-plane test.
-
 ---
 
-# 10. Test the device_connect transport
-
-After validating `raw_zenoh`, repeat the test using the `device_connect` transport.
-
-Ensure the required `device-connect-edge` dependency is installed in the RPi5 environment.
-
-Change the transport in the configuration on both the DGX and RPi5 from:
-
-```text
-SEAM_TRANSPORT=raw_zenoh
-```
-
-to:
-
-```text
-SEAM_TRANSPORT=device_connect
-```
-
-Restart the body on the RPi5:
-
-```bash
-./scripts/seam_run.sh configs/dgx-camera.env body
-```
-
-Then repeat the request from the DGX:
-
-```bash
-./scripts/seam_run.sh configs/dgx-camera.env brain send get_image
-```
-
-The expected result is again a successful `get_image` response containing the camera frame metadata.
-
----
 
 # Troubleshooting
 

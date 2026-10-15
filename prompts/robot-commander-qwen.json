@@ -1,0 +1,24 @@
+{
+  "id": "robot_commander_qwen_v0",
+  "version": "0.1",
+  "title": "Qwen Robot Commander Gesture Control",
+  "task_type": "intent_control",
+  "output_contract": {
+    "format": "single_intent",
+    "allowed_intents": ["STOP", "TROT"],
+    "fallback_intent": "STOP",
+    "reject_extra_text": true
+  },
+  "safety": {
+    "physical_robot_control": true,
+    "ambiguous_output_policy": "STOP",
+    "requires_runtime_confirmation_for": ["TROT"],
+    "notes": "Only output TROT when the thumbs-up gesture is clearly visible. Open palm or uncertainty must be STOP."
+  },
+  "sensor_assumptions": {
+    "primary_sensor": "camera",
+    "view": "robot-facing or operator-facing live stream",
+    "required_visual_evidence": ["thumbs-up hand gesture", "open palm with five fingers"]
+  },
+  "prompt": "Identify the hand gesture in this image. If it is a thumbs-up gesture, respond with TROT. For any other gesture or if you are uncertain, respond with STOP. Your entire response must be exactly one word: TROT or STOP."
+}
